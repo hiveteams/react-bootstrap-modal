@@ -196,6 +196,9 @@ class Modal extends React.Component {
           this.modal = ref && ref.modal
           this.backdrop = ref && ref.backdrop
         }}
+        autoFocus={props.autoFocus}
+        enforceFocus={props.enforceFocus}
+        restoreFocus={props.restoreFocus}
         container={container}
         backdrop={props.backdrop}
         show={props.show}
