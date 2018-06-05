@@ -37,6 +37,9 @@ class Modal extends React.Component {
 
   static propTypes = {
     show: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+    enforceFocus: PropTypes.bool,
+    restoreFocus: PropTypes.bool,
 
     /** sizes **/
     small: PropTypes.bool,
@@ -69,6 +72,9 @@ class Modal extends React.Component {
     keyboard:           true,
     animate:            true,
     transition:         true,
+    autoFocus:          false,
+    enforceFocus:       true,
+    restoreFocus:       true,
     container:          canUseDOM ? document.body : null,
     attentionClass:     'shake',
     manager: (BaseModal.getDefaultProps
