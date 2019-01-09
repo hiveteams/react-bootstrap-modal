@@ -28,6 +28,12 @@ let omit = (obj, keys) => Object.keys(obj).reduce((o, key) => {
   return o;
 }, {});
 
+function DialogTransition(props) {
+  return <Fade {...props} timeout={Modal.TRANSITION_DURATION} />;
+}
+function BackdropTransition(props) {
+  return <Fade {...props} timeout={Modal.BACKDROP_TRANSITION_DURATION} />;
+}
 
 class Modal extends React.Component {
 
@@ -161,7 +167,7 @@ class Modal extends React.Component {
     let prefix = modalPrefix || Modal.getDefaultPrefix();
 
     if (transition === true)
-      transition = Fade;
+      transition = DialogTransition;
 
     let modal = (
       <div
@@ -173,7 +179,7 @@ class Modal extends React.Component {
       >
         <div
           key='modal'
-          ref='inner'
+          ref={r => this.innerRef = r }
           className={cn(
               prefix + '-dialog'
             , dialogClassName
@@ -202,6 +208,11 @@ class Modal extends React.Component {
         container={container}
         backdrop={props.backdrop}
         show={props.show}
+        backdropStyle={backdrop}
+        backdropClassName={prefix + '-backdrop'}
+        containerClassName={prefix + '-open'}
+        transition={transition || undefined}
+        backdropTransition={transition ? BackdropTransition : undefined}
         onHide={this.props.onHide}
         onEnter={onEnter}
         onEntering={this.handleEntering}
@@ -209,12 +220,6 @@ class Modal extends React.Component {
         onExit={onExit}
         onExiting={this.handleExiting}
         onExited={onExited}
-        backdropStyle={backdrop}
-        backdropClassName={prefix + '-backdrop'}
-        containerClassName={prefix + '-open'}
-        transition={transition}
-        dialogTransitionTimeout={Modal.TRANSITION_DURATION}
-        backdropTransitionTimeout={Modal.BACKDROP_TRANSITION_DURATION}
       >
         {modal}
       </BaseModal>
@@ -228,7 +233,7 @@ class Modal extends React.Component {
       this.setState({ classes: '' }, ()=> {
         if (this.props.show) {
            // eslint-disable-next-line no-unused-expressions
-          this.refs.inner.offsetWidth
+          this.innerRef.offsetWidth
           this.setState({
             classes: attentionClass + ' animated',
           })
