@@ -175,7 +175,7 @@ class Modal extends React.Component {
         ref={r => this.dialog = r }
         style={dialog}
         className={cn(className, prefix, { in: props.show && !transition })}
-        onClick={this.props.backdrop ? e => this.handleBackdropClick(e) : null}
+        onMouseDown={this.props.backdrop ? e => this.handleBackdropClick(e) : null}
       >
         <div
           key='modal'
